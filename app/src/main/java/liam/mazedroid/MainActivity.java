@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends Activity {
 
@@ -33,5 +34,25 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void compleatableclick(View v)
+    {
+        setContentView(new gameview(this,1));
+    }
+    public void randomclick(View v)
+    {
+        setContentView(new gameview(this,2));
+    }
+    public void loadmazeclick(View v)
+    {
+        setContentView(new gameview(this,3));
+    }
+    public void presetclick(View v)
+    {
+        setContentView(new gameview(this,4));
+    }
+    public void editclick(View v)
+    {
+        setContentView(new editview(this));
     }
 }
