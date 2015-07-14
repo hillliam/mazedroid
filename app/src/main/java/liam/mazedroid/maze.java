@@ -1,5 +1,9 @@
 package liam.mazedroid;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Color;
 /**
  * Created by liam on 13/07/2015.
  */
@@ -36,90 +40,80 @@ public class maze
         picetype = maze_pices.all;
         distance = 10000;
     }
-    public void pint(int x, int y,int size, int linethicness)
+    public void print(int x, int y,int size, int linethicness, Canvas screen, Paint paint)
     {
+        paint.setStrokeWidth(0);
         if (playerison)
         {
-            SDL_Rect p = {x + 0, y + 0, size, size};
-            SDL_FillRect(screen, &p,SDL_MapRGB( screen->format, 0x00, 0xFF, 0x00 ));
+            paint.setColor(Color.rgb(0x00, 0xFF, 0x00));
+            screen.drawRect(x, y, x+size, y+size,paint);
+            //drawRect(left, top, right, bottom, paint)
             hasbeing = true;
         }
         else if (endpoint)
         {
-            SDL_Rect p = {x + 0, y + 0, size, size};
-            SDL_FillRect(screen, &p,SDL_MapRGB( screen->format, 0x00, 0x00, 0xFF ));
+            paint.setColor(Color.rgb(0x00, 0x00, 0xFF));
+            screen.drawRect(x, y, x+size, y+size,paint);
         }
         else if (bestpath)
         {
-            SDL_Rect p = {x + 0, y + 0, size, size};
-            SDL_FillRect(screen, &p,SDL_MapRGB( screen->format, 0xFF, 0xA5, 0x00 ));
+            screen.drawRect(x, y, x+size, y+size,paint);
+            paint.setColor(Color.rgb(0xFF, 0xA5, 0x00));
         }
         else if (hasbeing)
         {
-            SDL_Rect p = {x + 0, y + 0, size, size};
-            SDL_FillRect(screen, &p,SDL_MapRGB( screen->format, 0xFF, 0x00, 0x00 ));
+            paint.setColor(Color.rgb(0xFF, 0x00, 0x00));
+            screen.drawRect(x, y, x + size, y + size, paint);
         }
         else if (nonreatchable)
         {
-            SDL_Rect p = {x + 0, y + 0, size, size};
-            SDL_FillRect(screen, &p,SDL_MapRGB( screen->format, 0x69, 0x69, 0x69 ));
+            paint.setColor(Color.rgb(0x69, 0x69, 0x69));
+            screen.drawRect(x, y, x + size, y + size, paint);
         }
         else
         {
-            SDL_Rect p = {x + 0, y + 0, size, size};
-            SDL_FillRect(screen, &p,SDL_MapRGB( screen->format, 0xF2, 0xF2, 0xF0 ));
+            paint.setColor(Color.rgb(0xF2, 0xF2, 0xF0));
+            screen.drawRect(x, y, x + size, y + size, paint);
         }
+        paint.setStrokeWidth(linethicness);
+        paint.setColor(Color.rgb(0x00, 0x00, 0x00));
         switch (picetype)
         {
-            case east:{
-                SDL_Rect q = {x + 0, y + 0, size, linethicness};
-                SDL_Rect b = {x + 0, y + size - linethicness, size, linethicness};
-                SDL_FillRect(screen, &q,SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ));
-                SDL_FillRect(screen, &b,SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ));}
+            case east:
+                screen.drawRect(x, y, x + size, y + linethicness, paint);
+                screen.drawRect(x, y+size - linethicness, x + size, y + linethicness, paint);
             break;
-            case eastwastnorth:{
-                SDL_Rect f = {x + 0, y + size - linethicness, size, linethicness};
-                SDL_FillRect(screen, &f,SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ));}
+            case eastwastnorth:
+                screen.drawRect(x, y + size - linethicness, x + size, y + linethicness, paint);
             break;
-            case eastwestsouth:{
-                SDL_Rect g = {x + 0, y + 0, size, linethicness};
-                SDL_FillRect(screen, &g,SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ));}
+            case eastwestsouth:
+                screen.drawRect(x, y, x + size, y + linethicness, paint);
             break;
-            case north:{
-                SDL_Rect c = {x + 0, y + 0, linethicness, size};
-                SDL_Rect d = {x + size - linethicness, y + 0, linethicness, size};
-                SDL_FillRect(screen, &c,SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ));
-                SDL_FillRect(screen, &d,SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ));}
+            case north:
+                screen.drawRect(x, y, x + linethicness, y + size, paint);
+                screen.drawRect(x + size - linethicness, y, x + linethicness, y + size, paint);
             break;
-            case northeast:{
-                SDL_Rect h = {x + 0, y + 0, linethicness, size};
-                SDL_Rect i = {x + 0, y + 0, size, linethicness};
-                SDL_FillRect(screen, &h,SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ));
-                SDL_FillRect(screen, &i,SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ));}
+            case northeast:
+                screen.drawRect(x, y, x + linethicness, y + size, paint);
+                screen.drawRect(x, y, x + size, y + linethicness, paint);
             break;
-            case northwest:{
-                SDL_Rect j = {x + size - linethicness, y + 0, linethicness, size};
-                SDL_Rect k = {x + 0, y + 0, size, linethicness};
-                SDL_FillRect(screen, &j,SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ));
-                SDL_FillRect(screen, &k,SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ));}
+            case northwest:
+                screen.drawRect(x + size - linethicness, y, x + linethicness, y + size, paint);
+                screen.drawRect(x, y, x + size, y + linethicness, paint);
             break;
-            case southeast:{
-                SDL_Rect l = {x + 0, y + size - linethicness, size, linethicness};
-                SDL_Rect m = {x + 0, y + 0, linethicness, size};
-                SDL_FillRect(screen, &l,SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ));
-                SDL_FillRect(screen, &m,SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ));}
+            case southeast:
+                screen.drawRect(x, y + size - linethicness, x + size, y + linethicness, paint);
+                screen.drawRect(x, y, x + linethicness, y + size, paint);
             break;
-            case southwest:{
-                SDL_Rect n = {x + 0, y + size - linethicness, size, linethicness};
-                SDL_Rect o = {x + size - linethicness, y + 0, linethicness, size};
-                SDL_FillRect(screen, &n,SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ));
-                SDL_FillRect(screen, &o,SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ));}
+            case southwest:
+                screen.drawRect(x, y + size - linethicness, x + size, y + linethicness, paint);
+                screen.drawRect(x + size - linethicness, y, x + linethicness + size, y + size, paint);
             break;
-            case noenterable:{
-                SDL_Rect p = {x + 0, y + 0, size, size};
-                SDL_FillRect(screen, &p,SDL_MapRGB( screen->format, 0x00, 0x00, 0x00 ));}
+            case noenterable:
+                //SDL_Rect p = {x + 0, y + 0, size, size};
+                paint.setStrokeWidth(0);
+                screen.drawRect(x, y, x + size, y + size, paint);
             break;
         }
-    }
     }
 }
