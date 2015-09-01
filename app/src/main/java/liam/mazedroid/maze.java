@@ -6,6 +6,7 @@ import android.graphics.Path;
 import android.graphics.Color;
 /**
  * Created by liam on 13/07/2015.
+ * Copyright © Liam Hill 2015
  */
 enum maze_pices
 {

@@ -1,3 +1,4 @@
+// Copyright © Liam Hill 2015
 package liam.mazedroid;
 
 import android.content.Context;
