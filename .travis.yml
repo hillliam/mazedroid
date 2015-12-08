@@ -14,3 +14,8 @@ script: ./gradlew
 
 notifications:
   email: true
+
+before_install:
+  - pip install codecov
+after_success:
+  - codecov
