@@ -8,7 +8,12 @@ sudo: required
 
 android:
   components:
-    - build-tools-23.0.0
+    - platform-tool
+    - tool
+    - android-23
+    - build-tools-23
+    - extra-android-m2repository
+    - extra-google-m2repository
 
 before_script: chmod +x gradlew 
 
